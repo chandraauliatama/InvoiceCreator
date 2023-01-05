@@ -69,6 +69,8 @@ class InvoiceResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('Print')->button()->color('success')
+                    ->url(fn (Invoice $record): string => route('print', $record))
+                    ->openUrlInNewTab()
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

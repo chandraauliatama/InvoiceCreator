@@ -14,7 +14,7 @@ class ListInvoiceItems extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            Actions\Action::make('New Invoice')->url('/admin/invoices/create', true)->color('success')
+            Actions\Action::make('New Invoice')->url('/admin/invoices/create', true)->color('success'),
         ];
     }
 }

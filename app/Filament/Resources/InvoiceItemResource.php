@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\InvoiceItemResource\Pages;
-use App\Filament\Resources\InvoiceItemResource\RelationManagers;
 use App\Models\InvoiceItem;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InvoiceItemResource extends Resource
 {
@@ -69,14 +66,14 @@ class InvoiceItemResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -84,5 +81,5 @@ class InvoiceItemResource extends Resource
             'create' => Pages\CreateInvoiceItem::route('/create'),
             'edit' => Pages\EditInvoiceItem::route('/{record}/edit'),
         ];
-    }    
+    }
 }
