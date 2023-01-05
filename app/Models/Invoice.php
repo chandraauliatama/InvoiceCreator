@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function invoiceitem()
+    {
+        return $this->hasMany(InvoiceItem::class);
+    }
 }
