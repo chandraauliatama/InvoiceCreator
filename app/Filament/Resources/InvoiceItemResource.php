@@ -23,7 +23,8 @@ class InvoiceItemResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('invoice_id')
+                Forms\Components\Select::make('invoice_id')
+                    ->relationship('invoice', 'invoice_date')
                     ->required(),
                 Forms\Components\TextInput::make('work_description')
                     ->required()
@@ -33,8 +34,10 @@ class InvoiceItemResource extends Resource
                 Forms\Components\DatePicker::make('complete_date')
                     ->required(),
                 Forms\Components\TextInput::make('days_worked')
+                    ->numeric()
                     ->required(),
                 Forms\Components\TextInput::make('pay_per_day')
+                    ->numeric()
                     ->required(),
             ]);
     }
@@ -43,7 +46,8 @@ class InvoiceItemResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('invoice_id'),
+                Tables\Columns\TextColumn::make('invoice.invoice_date')
+                    ->date(),
                 Tables\Columns\TextColumn::make('work_description'),
                 Tables\Columns\TextColumn::make('start_date')
                     ->date(),
@@ -51,8 +55,6 @@ class InvoiceItemResource extends Resource
                     ->date(),
                 Tables\Columns\TextColumn::make('days_worked'),
                 Tables\Columns\TextColumn::make('pay_per_day'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
@@ -61,6 +63,7 @@ class InvoiceItemResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

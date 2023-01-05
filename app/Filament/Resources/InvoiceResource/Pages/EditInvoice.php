@@ -13,6 +13,7 @@ class EditInvoice extends EditRecord
     protected function getActions(): array
     {
         return [
+            Actions\Action::make('Print Invoice')->button(),
             Actions\DeleteAction::make(),
         ];
     }

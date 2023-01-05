@@ -52,16 +52,14 @@ class InvoiceResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('invoice_date')
+                    ->date(),
                 Tables\Columns\TextColumn::make('worker_name'),
                 Tables\Columns\TextColumn::make('worker_email'),
                 Tables\Columns\TextColumn::make('worker_phone'),
                 Tables\Columns\TextColumn::make('bill_to'),
                 Tables\Columns\TextColumn::make('bill_address'),
-                Tables\Columns\TextColumn::make('invoice_date')
-                    ->date(),
                 Tables\Columns\TextColumn::make('payment_link'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
@@ -70,6 +68,7 @@ class InvoiceResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('Print')->button()->color('success')
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
