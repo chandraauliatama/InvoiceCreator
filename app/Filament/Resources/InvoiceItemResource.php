@@ -3,18 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\InvoiceItemResource\Pages;
+use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
 
 class InvoiceItemResource extends Resource
 {
     protected static ?string $model = InvoiceItem::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
 
     public static function form(Form $form): Form
     {
@@ -44,7 +46,8 @@ class InvoiceItemResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('invoice.invoice_date')
-                    ->date(),
+                    ->date()
+                    ->url(fn ($record) => InvoiceResource::getUrl('edit', ['record' => $record->invoice_id])),
                 Tables\Columns\TextColumn::make('work_description'),
                 Tables\Columns\TextColumn::make('start_date')
                     ->date(),
@@ -56,7 +59,12 @@ class InvoiceItemResource extends Resource
                     ->dateTime(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('Invoice Date')
+                    ->relationship('invoice', 'invoice_date', fn (Builder $query) => $query),
+                Tables\Filters\SelectFilter::make('Worker Name')
+                    ->relationship('invoice', 'worker_name', fn (Builder $query) => $query),
+                Tables\Filters\SelectFilter::make('Bill To')
+                    ->relationship('invoice', 'bill_to', fn(Builder $query) => $query)
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\InvoiceItemResource\Pages;
 
 use App\Filament\Resources\InvoiceItemResource;
+use App\Filament\Resources\InvoiceResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
 
@@ -14,7 +15,7 @@ class EditInvoiceItem extends EditRecord
     {
         return [
             Actions\Action::make('See Invoice')->button()
-                ->url(fn () => route('filament.resources.invoices.edit', $this->record->invoice_id)),
+                ->url(fn () => InvoiceResource::getUrl('edit', ['record' => $this->record->invoice_id])),
             Actions\DeleteAction::make(),
         ];
     }
