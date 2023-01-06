@@ -19,6 +19,6 @@ class Invoice extends Model
 
     public function invoiceitem()
     {
-        return $this->hasMany(InvoiceItem::class);
+        return $this->hasMany(InvoiceItem::class)->orderBy('start_date');
     }
 }

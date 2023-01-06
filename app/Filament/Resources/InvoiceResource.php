@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\InvoiceResource\Pages;
+use App\Filament\Resources\InvoiceResource\RelationManagers\InvoiceitemRelationManager;
 use App\Models\Invoice;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -84,7 +85,7 @@ class InvoiceResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            InvoiceitemRelationManager::class
         ];
     }
 
