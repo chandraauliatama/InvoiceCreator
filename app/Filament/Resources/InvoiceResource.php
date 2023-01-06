@@ -51,6 +51,14 @@ class InvoiceResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\IconColumn::make('paid')
+                ->boolean()
+                ->action(function($record, $column) {
+                    $name = $column->getName();
+                    $record->update([
+                        $name => !$record->$name
+                    ]);
+                }),
                 Tables\Columns\TextColumn::make('invoice_date')
                     ->date(),
                 Tables\Columns\TextColumn::make('worker_name'),
