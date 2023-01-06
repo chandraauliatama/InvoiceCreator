@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PrintController extends Controller
@@ -17,13 +16,13 @@ class PrintController extends Controller
      */
     public function __invoke(Invoice $invoice)
     {
-        $pdf = Pdf::loadView('welcome', compact('invoice'));
+        $date = $invoice->invoice_date->format('jFY');
+        $name = str_replace(' ', '', Str($invoice->worker_name)->headline());
+        $file_name = 'invoice_'.$date.'_'.$name.'.pdf';
+        $space = fn ($int) => str_repeat('&nbsp; ', $int);
+        $total = 0;
 
-        $date = Carbon::create($invoice->invoice_date);
-        $date = $date->format('jFY');
-        $name = str_replace(" ", "",$invoice->worker_name);
-
-        $file_name = "invoice_" . $date . "_" . $name . ".pdf";
+        $pdf = Pdf::loadView('print', compact('invoice', 'file_name', 'space', 'total'));
 
         return $pdf->stream($file_name);
     }

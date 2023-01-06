@@ -13,6 +13,8 @@ class EditInvoiceItem extends EditRecord
     protected function getActions(): array
     {
         return [
+            Actions\Action::make('See Invoice')->button()
+                ->url(fn () => route('filament.resources.invoices.edit', $this->record->invoice_id)),
             Actions\DeleteAction::make(),
         ];
     }

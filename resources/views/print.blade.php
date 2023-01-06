@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>{{ $file_name }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -47,20 +47,12 @@
 
 </head>
 
-@php
-    function space($space)
-    {
-        return str_repeat('&nbsp; ', $space);
-    }
-    $total = 0;
-@endphp
-
 <body class="antialiased">
     <h2 style="margin: -2px;">{{ $invoice->worker_name }}</h2>
     <hr style="border: 1px solid">
-    <p>Bill To {!! space(5) !!} : {{ $invoice->bill_to }}</p>
+    <p>Bill To {!! $space(5) !!} : {{ $invoice->bill_to }}</p>
     <p style="margin-left: 102px">{{ $invoice->bill_address }}</p>
-    <p>Invoice date : {{ \Carbon\Carbon::create($invoice->invoice_date)->format('F j\, Y') }}</p>
+    <p>Invoice date : {{ $invoice->invoice_date->format('F j\, Y') }}</p>
 
     <br>
     <br>
@@ -80,14 +72,12 @@
             @foreach ($invoice->invoiceitem as $item)
                 <tr>
                     <td>{{ $item->work_description }}</td>
-                    <td>{{ \Carbon\Carbon::create($item->start_date)->format('F j\, Y') }}</td>
-                    <td>{{ \Carbon\Carbon::create($item->complete_date)->format('F j\, Y') }}</td>
+                    <td>{{ $item->start_date->format('F j\, Y') }}</td>
+                    <td>{{ $item->complete_date->format('F j\, Y') }}</td>
                     <td>{{ $item->days_worked }}</td>
                     <td>{{ $item->pay_per_day }}</td>
                     <td>${{ $item->pay_per_day * $item->days_worked }}</td>
-                    @php
-                        $total += $item->pay_per_day * $item->days_worked;
-                    @endphp
+                    @php $total += $item->pay_per_day * $item->days_worked; @endphp
                 </tr>
             @endforeach
             <tr>
@@ -108,10 +98,10 @@
     <br>
     <h4 style="margin-bottom: -13px">Payment:</h4>
     <p>USD <span>account details(For ACH Transfer):</span></p>
-    <p>Account Holder {!! space(12) !!}: <span>Chandra Aulia Tama</span></p>
+    <p>Account Holder {!! $space(12) !!}: <span>Chandra Aulia Tama</span></p>
     <p>ACH and Wire routing number : <span>084009519</span></p>
-    <p>Account number {!! space(11) !!}: <span>9600010078614341</span></p>
-    <p>Address{!! space(18) !!}: 30 W. 26th Street, Sixth Floor, New York NY 10010, United States</p>
+    <p>Account number {!! $space(11) !!}: <span>9600010078614341</span></p>
+    <p>Address{!! $space(18) !!}: 30 W. 26th Street, Sixth Floor, New York NY 10010, United States</p>
 
     <br>
     <h4 style="margin-bottom: 4px">Or, Paypal:</h4>
