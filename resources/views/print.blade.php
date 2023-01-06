@@ -69,7 +69,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($invoice->invoiceitem as $item)
+            @foreach ($invoice->invoiceitem->sortBy('start_date') as $item)
                 <tr>
                     <td>{{ $item->work_description }}</td>
                     <td>{{ $item->start_date->format('F j\, Y') }}</td>
