@@ -51,27 +51,24 @@ class InvoiceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\IconColumn::make('paid')
-                ->boolean()
-                ->action(function($record, $column) {
-                    $name = $column->getName();
-                    $record->update([
-                        $name => !$record->$name
-                    ]);
-                }),
+                Tables\Columns\IconColumn::make('paid')->boolean()->sortable()
+                    ->action(function ($record, $column) {
+                        $name = $column->getName();
+                        $record->update([$name => ! $record->$name]);
+                    }),
                 Tables\Columns\TextColumn::make('invoice_date')
-                    ->date(),
-                Tables\Columns\TextColumn::make('worker_name'),
+                    ->date()->sortable(),
+                Tables\Columns\TextColumn::make('worker_name')->wrap()->searchable(),
                 Tables\Columns\TextColumn::make('worker_email'),
                 Tables\Columns\TextColumn::make('worker_phone'),
-                Tables\Columns\TextColumn::make('bill_to'),
-                Tables\Columns\TextColumn::make('bill_address'),
+                Tables\Columns\TextColumn::make('bill_to')->searchable(),
+                Tables\Columns\TextColumn::make('bill_address')->wrap(),
                 Tables\Columns\TextColumn::make('payment_link'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
             ->filters([
-                //
+                Tables\Filters\TernaryFilter::make('paid'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

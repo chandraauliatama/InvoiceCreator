@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\InvoiceItemResource\Pages;
-use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -46,15 +45,15 @@ class InvoiceItemResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('invoice.invoice_date')
-                    ->date()
+                    ->date()->sortable()
                     ->url(fn ($record) => InvoiceResource::getUrl('edit', ['record' => $record->invoice_id])),
-                Tables\Columns\TextColumn::make('work_description'),
+                Tables\Columns\TextColumn::make('work_description')->wrap()->searchable(),
                 Tables\Columns\TextColumn::make('start_date')
-                    ->date(),
+                    ->date()->sortable(),
                 Tables\Columns\TextColumn::make('complete_date')
-                    ->date(),
-                Tables\Columns\TextColumn::make('days_worked'),
-                Tables\Columns\TextColumn::make('pay_per_day'),
+                    ->date()->sortable(),
+                Tables\Columns\TextColumn::make('days_worked')->suffix(' day')->sortable(),
+                Tables\Columns\TextColumn::make('pay_per_day')->prefix('$'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
@@ -64,7 +63,7 @@ class InvoiceItemResource extends Resource
                 Tables\Filters\SelectFilter::make('Worker Name')
                     ->relationship('invoice', 'worker_name', fn (Builder $query) => $query),
                 Tables\Filters\SelectFilter::make('Bill To')
-                    ->relationship('invoice', 'bill_to', fn(Builder $query) => $query)
+                    ->relationship('invoice', 'bill_to', fn (Builder $query) => $query),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
