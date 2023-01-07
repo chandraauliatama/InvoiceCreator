@@ -19,7 +19,6 @@ class PrintController extends Controller
         $date = $invoice->invoice_date->format('jFY');
         $name = str_replace(' ', '', Str($invoice->worker_name)->headline());
         $file_name = 'invoice_'.$date.'_'.$name.'.pdf';
-        $space = fn ($int) => str_repeat('&nbsp; ', $int);
         $total = 0;
 
         $pdf = Pdf::loadView('print', compact('invoice', 'file_name', 'space', 'total'));

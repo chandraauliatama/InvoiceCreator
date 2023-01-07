@@ -50,12 +50,18 @@
 <body class="antialiased">
     <h2 style="margin: -2px;">{{ $invoice->worker_name }}</h2>
     <hr style="border: 1px solid">
-    <p>Bill To {!! $space(5) !!} : {{ $invoice->bill_to }}</p>
-    <p style="margin-left: 102px">{{ $invoice->bill_address }}</p>
-    <p>Invoice date : {{ $invoice->invoice_date->format('F j\, Y') }}</p>
-
-    <br>
-    <br>
+    <table width="100%" border="0" style="margin:20px 0">
+        <tr style="vertical-align: top;">
+            <td width="70">Bill To</td>
+            <td width="1">:</td>
+            <td>{{ $invoice->bill_to }} <br> {{ $invoice->bill_address }}</td>
+        </tr>
+        <tr>
+            <td>Invoice Date</td=>
+            <td>:</td>
+            <td>{{ $invoice->invoice_date->format('F j\, Y') }}</td>
+        </tr>
+    </table>
 
     <table class="demo">
         <thead>
@@ -63,7 +69,7 @@
                 <th>Work Description</th>
                 <th>Started Date</th>
                 <th>Completion Date</th>
-                <th>Days Worked&nbsp;</th>
+                <th>Days Worked</th>
                 <th>Pay/Day</th>
                 <th>Total</th>
             </tr>
@@ -87,27 +93,66 @@
         </tbody>
     </table>
 
-    <br>
-    <p>Thank you for your cooperation, I hope our cooperation can continue for the next month.</p>
-    <br>
-    <br>
-    <h4 style="margin-bottom: -13px">Worker Info:</h4>
-    <p> <span>{{ $invoice->worker_name }}</span></p>
-    <p> <span>{{ $invoice->worker_email }}</span></p>
-    <p> <span>+{{ $invoice->worker_phone }}</span></p>
-    <br>
-    <h4 style="margin-bottom: -13px">Payment:</h4>
-    <p>USD <span>account details(For ACH Transfer):</span></p>
-    <p>Account Holder {!! $space(12) !!}: <span>Chandra Aulia Tama</span></p>
-    <p>ACH and Wire routing number : <span>084009519</span></p>
-    <p>Account number {!! $space(11) !!}: <span>9600010078614341</span></p>
-    <p>Address{!! $space(18) !!}: 30 W. 26th Street, Sixth Floor, New York NY 10010, United States</p>
-
-    <br>
-    <h4 style="margin-bottom: 4px">Or, Paypal:</h4>
-    <a href="{{ $invoice->payment_link }}" style="font-size: 17px">{{ $invoice->payment_link }}</a>
-    <p>*the payment that I receive must be in a full amount as stated in this invoice.</p>
-
+    <p>&nbsp;Thank you for your cooperation, I hope our cooperation can continue for the next month.</p>
+    <table width="100%" border="0" style="margin:20px 0">
+        <tr>
+            <td>
+                <h4 style="margin-bottom: 0">Worker Info:</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>{{ $invoice->worker_name }}</td>
+        </tr>
+        <tr>
+            <td>{{ $invoice->worker_email }}</td>
+        </tr>
+        <tr>
+            <td>+{{ $invoice->worker_phone }}</td>
+        </tr>
+    </table>
+    <table width="100%" border="0" style="margin:20px 0">
+        <tr>
+            <td colspan="3">
+                <h4 style="margin-bottom:-3px">Payment:</h4>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">USD account details<span>(for ACH transfer):</span></td>
+        </tr>
+        <tr>
+            <td width="165">Account Holder</td>
+            <td width="1"> : </td>
+            <td><span>{{ $invoice->worker_name }}</span></td>
+        </tr>
+        <tr>
+            <td>ACH and Wire routing number</td>
+            <td> : </td>
+            <td><span>084009519</span></td>
+        </tr>
+        <tr>
+            <td>Account Number</td>
+            <td> : </td>
+            <td><span>9600010078614341</span></td>
+        </tr>
+        <tr style="vertical-align:top">
+            <td>Address</td>
+            <td> : </td>
+            <td><span>30 W. 26th Street, Sixth Floor, <br> New York NY 10010, <br> United States</span></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4 style="margin-bottom:-1px">Or, Paypal:</h4>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <a href="{{ $invoice->payment_link }}" style="font-size: 17px">{{ $invoice->payment_link }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">*the payment that I receive must be in a full amount as stated in this invoice.</td>
+        </tr>
+    </table>
 </body>
 
 </html>
