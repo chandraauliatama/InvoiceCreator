@@ -4,25 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 
 class PrintController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function __invoke(Invoice $invoice)
     {
-        $date = $invoice->invoice_date->format('jFY');
-        $name = str_replace(' ', '', Str($invoice->worker_name)->headline());
-        $file_name = 'invoice_'.$date.'_'.$name.'.pdf';
+        $invoiceDate = $invoice->invoice_date->format('jFY');
+        $workerName = str($invoice->worker_name)->replace(' ', '')->headline();
+        $fileName = "invoice_{$invoiceDate}_{$workerName}.pdf";
         $total = 0;
 
-        $pdf = Pdf::loadView('print', compact('invoice', 'file_name', 'space', 'total'));
+        $pdf = PDF::loadView('print', compact('invoice', 'fileName', 'total'));
 
-        return $pdf->stream($file_name);
+        return $pdf->stream($fileName);
     }
 }
