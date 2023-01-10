@@ -5,11 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\InvoiceResource\Pages;
 use App\Filament\Resources\InvoiceResource\RelationManagers\InvoiceitemRelationManager;
 use App\Models\Invoice;
+use Closure;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Model;
 
 class InvoiceResource extends Resource
 {
@@ -24,6 +26,7 @@ class InvoiceResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('worker_name')
+                    ->dehydrateStateUsing(fn ($state) => ucwords($state))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('worker_email')
@@ -35,6 +38,7 @@ class InvoiceResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('bill_to')
+                    ->dehydrateStateUsing(fn ($state) => ucwords($state))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('bill_address')
@@ -45,6 +49,19 @@ class InvoiceResource extends Resource
                 Forms\Components\TextInput::make('payment_link')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Toggle::make('ach_transfer')->inline(false)->label('ACH Transfer')
+                    ->reactive(),
+                Forms\Components\TextInput::make('ach_routing_number')
+                    ->numeric()
+                    ->hidden(fn (Closure $get) => $get('ach_transfer') == false)
+                    ->required(fn (Closure $get) => $get('ach_transfer') == true),
+                Forms\Components\TextInput::make('ach_account_number')
+                    ->numeric()
+                    ->hidden(fn (Closure $get) => $get('ach_transfer') == false)
+                    ->required(fn (Closure $get) => $get('ach_transfer') == true),
+                Forms\Components\TextInput::make('ach_account_address')
+                    ->hidden(fn (Closure $get) => $get('ach_transfer') == false)
+                    ->required(fn (Closure $get) => $get('ach_transfer') == true),
             ]);
     }
 
@@ -69,10 +86,15 @@ class InvoiceResource extends Resource
                     ->dateTime(),
             ])
             ->filters([
-                Tables\Filters\TernaryFilter::make('paid'),
+                Tables\Filters\TernaryFilter::make('paid')->default(false),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ReplicateAction::make()->button()->color('danger')
+                    ->form([Forms\Components\DatePicker::make('invoice_date')->required()])
+                    ->beforeReplicaSaved(function (Model $replica, array $data): void {
+                        $replica->invoice_date = $data['invoice_date'];
+                    }),
+                Tables\Actions\EditAction::make()->button(),
                 Tables\Actions\Action::make('Print')->button()->color('success')
                     ->url(fn (Invoice $record): string => route('print', $record))
                     ->openUrlInNewTab(),

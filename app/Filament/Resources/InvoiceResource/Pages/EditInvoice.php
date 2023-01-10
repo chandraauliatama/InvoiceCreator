@@ -19,4 +19,15 @@ class EditInvoice extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        if ($data['ach_transfer'] == false) {
+            $data['ach_account_number'] = null;
+            $data['ach_routing_number'] = null;
+            $data['ach_account_address'] = null;
+        }
+
+        return $data;
+    }
 }
