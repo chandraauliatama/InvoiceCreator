@@ -115,6 +115,7 @@
             <td colspan="3">
                 <h4 style="margin-bottom:-3px">Payment:</h4>
             </td>
+            @if ($invoice->ach_transfer == true)
         </tr>
         <tr>
             <td colspan="3">USD account details<span>(for ACH transfer):</span></td>
@@ -127,23 +128,24 @@
         <tr>
             <td>ACH and Wire routing number</td>
             <td> : </td>
-            <td><span>084009519</span></td>
+            <td><span>{{ $invoice->ach_routing_number }}</span></td>
         </tr>
         <tr>
             <td>Account Number</td>
             <td> : </td>
-            <td><span>9600010078614341</span></td>
+            <td><span>{{ $invoice->ach_account_number }}</span></td>
         </tr>
         <tr style="vertical-align:top">
             <td>Address</td>
             <td> : </td>
-            <td><span>30 W. 26th Street, Sixth Floor, <br> New York NY 10010, <br> United States</span></td>
+            <td><span>{{ $invoice->ach_account_address }}</span></td>
         </tr>
         <tr>
             <td colspan="3">
                 <h4 style="margin-bottom:-1px">Or, Paypal:</h4>
             </td>
         </tr>
+        @endif
         <tr>
             <td colspan="3">
                 <a href="{{ $invoice->payment_link }}" style="font-size: 17px">{{ $invoice->payment_link }}</a>
