@@ -2,9 +2,10 @@
 
 ### A Simple Invoice Creator using Laravel and Filament
 
-![Screenshot from 2023-01-12 23-49-59](https://user-images.githubusercontent.com/64741857/212133288-a562efc7-34c0-4318-9096-a42908380af0.png)
-![Screenshot from 2023-01-12 23-48-47](https://user-images.githubusercontent.com/64741857/212133296-bc5e589b-b48d-4057-a533-5b6affe01924.png)
-![Screenshot from 2023-01-12 23-46-37](https://user-images.githubusercontent.com/64741857/212133299-b0917c86-8ff6-4d57-abbc-778ebba9697c.png)
+![Create Invoice](https://user-images.githubusercontent.com/64741857/212133299-b0917c86-8ff6-4d57-abbc-778ebba9697c.png)
+![Create Invoice Items](https://user-images.githubusercontent.com/64741857/212133296-bc5e589b-b48d-4057-a533-5b6affe01924.png)
+![PDF Invoice Example](https://user-images.githubusercontent.com/64741857/212133288-a562efc7-34c0-4318-9096-a42908380af0.png)
+
 
 ## Installation
 
