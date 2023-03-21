@@ -94,7 +94,7 @@
     </table>
 
     <p>&nbsp;Thank you for your cooperation, I hope our cooperation can continue for the next month.</p>
-    <table width="100%" border="0" style="margin:20px 0">
+    <table width="100%" border="0" style="margin:5px 0">
         <tr>
             <td>
                 <h4 style="margin-bottom: 0">Worker Info:</h4>
@@ -110,7 +110,7 @@
             <td>+{{ $invoice->worker_phone }}</td>
         </tr>
     </table>
-    <table width="100%" border="0" style="margin:20px 0">
+    <table width="100%" border="0" style="margin:5px 0">
         <tr>
             <td colspan="3">
                 <h4 style="margin-bottom:-3px">Payment:</h4>
