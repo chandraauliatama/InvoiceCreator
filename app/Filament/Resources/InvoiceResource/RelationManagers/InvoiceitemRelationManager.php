@@ -3,9 +3,9 @@
 namespace App\Filament\Resources\InvoiceResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 
 class InvoiceitemRelationManager extends RelationManager
@@ -18,7 +18,7 @@ class InvoiceitemRelationManager extends RelationManager
 
     // protected static ?string $recordTitleAttribute = 'work_description';
 
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -38,7 +38,7 @@ class InvoiceitemRelationManager extends RelationManager
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
             ->columns([

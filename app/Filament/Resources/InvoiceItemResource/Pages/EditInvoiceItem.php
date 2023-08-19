@@ -11,7 +11,7 @@ class EditInvoiceItem extends EditRecord
 {
     protected static string $resource = InvoiceItemResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\Action::make('See Invoice')->button()
