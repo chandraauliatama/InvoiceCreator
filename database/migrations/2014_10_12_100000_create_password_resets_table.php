@@ -8,11 +8,10 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
+        // In laravel 10 this should be password_reset_tokens
         Schema::create('password_resets', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
@@ -22,11 +21,10 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
+        // In laravel 10 this should be password_reset_tokens
         Schema::dropIfExists('password_resets');
     }
 };
