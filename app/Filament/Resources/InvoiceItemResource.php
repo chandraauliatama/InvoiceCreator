@@ -5,9 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\InvoiceItemResource\Pages;
 use App\Models\InvoiceItem;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -15,7 +15,7 @@ class InvoiceItemResource extends Resource
 {
     protected static ?string $model = InvoiceItem::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     public static function form(Form $form): Form
     {

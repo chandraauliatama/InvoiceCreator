@@ -7,9 +7,9 @@ use App\Filament\Resources\InvoiceResource\RelationManagers\InvoiceitemRelationM
 use App\Models\Invoice;
 use Closure;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,7 +19,7 @@ class InvoiceResource extends Resource
 
     protected static ?int $navigationSort = -2;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -53,15 +53,15 @@ class InvoiceResource extends Resource
                     ->reactive(),
                 Forms\Components\TextInput::make('ach_routing_number')
                     ->numeric()
-                    ->hidden(fn (Closure $get) => $get('ach_transfer') == false)
-                    ->required(fn (Closure $get) => $get('ach_transfer') == true),
+                    ->hidden(fn (\Filament\Forms\Get $get) => $get('ach_transfer') == false)
+                    ->required(fn (\Filament\Forms\Get $get) => $get('ach_transfer') == true),
                 Forms\Components\TextInput::make('ach_account_number')
                     ->numeric()
-                    ->hidden(fn (Closure $get) => $get('ach_transfer') == false)
-                    ->required(fn (Closure $get) => $get('ach_transfer') == true),
+                    ->hidden(fn (\Filament\Forms\Get $get) => $get('ach_transfer') == false)
+                    ->required(fn (\Filament\Forms\Get $get) => $get('ach_transfer') == true),
                 Forms\Components\TextInput::make('ach_account_address')
-                    ->hidden(fn (Closure $get) => $get('ach_transfer') == false)
-                    ->required(fn (Closure $get) => $get('ach_transfer') == true),
+                    ->hidden(fn (\Filament\Forms\Get $get) => $get('ach_transfer') == false)
+                    ->required(fn (\Filament\Forms\Get $get) => $get('ach_transfer') == true),
             ]);
     }
 

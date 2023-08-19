@@ -1,16 +1,10 @@
 <?php
 
-// namespace Filament\Widgets;
-
 namespace App\Filament\Widgets;
 
-use Filament\Widgets\Widget;
+use Filament\Widgets\AccountWidget as AccountWidgetOriginal;
 
-class AccountWidget extends Widget
+class AccountWidget extends AccountWidgetOriginal
 {
-    protected static ?int $sort = -3;
-
     protected int|string|array $columnSpan = 'full';
-
-    protected static string $view = 'filament::widgets.account-widget';
 }
