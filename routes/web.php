@@ -13,6 +13,3 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::redirect('/', '/admin');
-Route::get('/print{invoice}', PrintController::class)->name('print');

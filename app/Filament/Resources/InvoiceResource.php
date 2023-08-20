@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\InvoiceResource\Pages;
 use App\Filament\Resources\InvoiceResource\RelationManagers\InvoiceitemRelationManager;
 use App\Models\Invoice;
-use Closure;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -96,8 +96,10 @@ class InvoiceResource extends Resource
                     }),
                 Tables\Actions\EditAction::make()->button(),
                 Tables\Actions\Action::make('Print')->button()->color('success')
-                    ->url(fn (Invoice $record): string => route('print', $record))
-                    ->openUrlInNewTab(),
+                    ->requiresConfirmation()
+                    ->modalIcon('heroicon-o-printer')
+                    ->icon('heroicon-o-printer')
+                    ->action(fn (Invoice $record) => InvoiceResource::printInvoice($record))
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -118,5 +120,16 @@ class InvoiceResource extends Resource
             'create' => Pages\CreateInvoice::route('/create'),
             'edit' => Pages\EditInvoice::route('/{record}/edit'),
         ];
+    }
+
+    public static function printInvoice(Invoice $invoice)
+    {
+        $invoiceDate    = $invoice->invoice_date->format('jFY');
+        $workerName     = str($invoice->worker_name)->replace(' ', '')->headline();
+        $fileName       = "invoice_{$invoiceDate}_{$workerName}.pdf";
+        $total          = 0;
+        $pdf            = Pdf::loadView('print', compact('invoice', 'fileName', 'total'));
+        
+        return response()->streamDownload(fn () => print($pdf->output()), $fileName);
     }
 }
